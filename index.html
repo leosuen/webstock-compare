@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>線上投資分析</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="./homepage.css">
+	<script type="text/javascript" src="./analyze.js"></script>
+	<script type="text/javascript" src="./math.js"></script>
+</head>
+<body>
+	請輸入股票代號：
+	<div id="stock1">
+		股票代號1：<input type="text" id="stock1-input">
+	</div>
+	<div id="stock2">
+		股票代號2：<input type="text" id="stock2-input">
+	</div>
+	<button id="sendTrigger" onclick="startCompare()">開始分析</button>
+	<div id="loading-area"></div>
+	<pre id="Avgmonth-opt"></pre>
+	<div id="std-opt"></div>
+</body>
+</html>
