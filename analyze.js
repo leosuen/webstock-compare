@@ -1,39 +1,13 @@
-function startCompare() {
-	var stock1 = document.getElementById('stock1-input');
-	var stock2 = document.getElementById('stock2-input');
-	var s1Value = stock1.value;
-	var s2Value = stock2.value;
-	loadphp(s1Value,s2Value);
-}
-
 var stock1json,stock2json;
 var stock1str=[],stock2str=[];
 var stockresult = document.getElementById("result-area");
-
-function loadphp(str1,str2){
-	var xhttp = new XMLHttpRequest();
-	xhttp.onreadystatechange = function() {
-		if (this.readyState === 4 && this.status === 200) {
-			var type = this.getResponseHeader("Content-Type");
-			var catchJSON = JSON.parse(this.responseText);
-			var temp = null ;
-			stock1json = catchJSON.obj1;
-			stock2json = catchJSON.obj2;
-			convertTostring(stock1json,"1");
-			convertTostring(stock2json,"2");
-			AllCalc();
-		}
-	};
-	xhttp.open("GET", "csvdecrypt.php?s1="+str1+"&s2="+str2, true);
-	xhttp.send();
-}
 
 function convertTostring(json,number){
 	var json = JSON.parse(json);
 	var tempDate = json["Date"];
 	var tempPrice = json["Adj Close"];
 	for (var i = 0 ; i < tempPrice.length ; i++) {
-		
+
 		if (number === "1") {
 			stock1str[i] = [];
 		}
@@ -161,6 +135,32 @@ function AllCalc(){
 	}
 	std = math.std(AvgToYear)*math.sqrt(12)*100;
 	document.getElementById("Avgmonth-opt").innerHTML = AvgMOpt ;
+}
+
+function loadphp(str1,str2){
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (this.readyState === 4 && this.status === 200) {
+			var type = this.getResponseHeader("Content-Type");
+			var catchJSON = JSON.parse(this.responseText);
+			var temp = null ;
+			stock1json = catchJSON.obj1;
+			stock2json = catchJSON.obj2;
+			convertTostring(stock1json,"1");
+			convertTostring(stock2json,"2");
+			AllCalc();
+		}
+	};
+	xhttp.open("GET", "csvdecrypt.php?s1="+str1+"&s2="+str2, true);
+	xhttp.send();
+}
+
+function startCompare() {
+	var stock1 = document.getElementById('stock1-input');
+	var stock2 = document.getElementById('stock2-input');
+	var s1Value = stock1.value;
+	var s2Value = stock2.value;
+	loadphp(s1Value,s2Value);
 }
 
 function daysInMonth(year, month) {
