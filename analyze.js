@@ -35,14 +35,21 @@ function convertTostring(json,number){
 	}
 }
 
+function daysInMonth(year, month) {
+  return new Date(year, month, 0).getDate();
+}
+
+var curdate1 = null;
+var curdate2 = null;
+var judgeUsingDate = null;
+var shortestLength = null;
+var iLength=0;
+var r1,r2,rpSum = 0,AvgPerMonth = [],TotalAvg = 0,AvgTime = [],rpArr = [],rpStd = [];
+var std = 0;
+var curMonth = null;
+var AvgCount = 0;
+var rpArrCount = 0;
 function AllCalc(){
-	var curdate1 = null;
-	var curdate2 = null;
-	var judgeUsingDate = null;
-	var shortestLength = null;
-	var iLength=0;
-	var r1,r2,rpSum = 0,AvgPerMonth = [],TotalAvg = 0,AvgTime = [],rpArr = [],rpStd = [];
-	var std = 0;
 	if (stock1str.length > stock2str.length) {
 		iLength = stock2str.length;
 	}
@@ -52,9 +59,14 @@ function AllCalc(){
 	else if(stock1str.length === stock2str.length){
 		iLength = stock1str.length;
 	}
-	var curMonth = null;
-	var AvgCount = 0;
-	var rpArrCount = 0;
+	function rCalc(p10,p11,p20,p21){
+		r1 = math.log(p10/p11);
+		r2 = math.log(p20/p21);
+		rpSum += 0.5*r1+0.5*r2;
+		rpArr[rpArrCount] = 0.5*r1+0.5*r2;
+		rpArrCount += 1;
+	}
+
 	for (var i = 0; i < iLength - 1; i++) {
 
 		curdate1 = new Date(stock1str[i][0]);
@@ -120,13 +132,7 @@ function AllCalc(){
 			}
 		}
 	}
-	function rCalc(p10,p11,p20,p21){
-		r1 = math.log(p10/p11);
-		r2 = math.log(p20/p21);
-		rpSum += 0.5*r1+0.5*r2;
-		rpArr[rpArrCount] = 0.5*r1+0.5*r2;
-		rpArrCount += 1;
-	}
+
 	var AvgMOpt = "";
 	var AvgToYear = [];
 	for (var i = 0; i < AvgPerMonth.length; i++) {
@@ -161,8 +167,4 @@ function startCompare() {
 	var s1Value = stock1.value;
 	var s2Value = stock2.value;
 	loadphp(s1Value,s2Value);
-}
-
-function daysInMonth(year, month) {
-  return new Date(year, month, 0).getDate();
 }
